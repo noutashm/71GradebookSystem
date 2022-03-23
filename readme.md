@@ -1,3 +1,3 @@
-Superuser Credentials
-username: admin
+# Superuser Credentials
+username: admin <br>
 password: admin
