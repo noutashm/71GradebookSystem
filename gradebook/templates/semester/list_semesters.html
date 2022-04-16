@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block content %}
+    <ul class="list-group">
+        {% for semester in semesters %}
+            <li class="list-group-item">
+                {{ semester.id }}. {{ semester.year }}
+                <a href="{% url "delete_semester" semester.id %}" class="btn btn-outline-danger" style="float: right">Delete</a>
+                <a href="{% url "update_semester_form" semester.id %}" class="btn btn-outline-success" style="float: right; margin-right: 20px">Update</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
