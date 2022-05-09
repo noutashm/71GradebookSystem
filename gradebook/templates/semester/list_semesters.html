@@ -1,16 +1,31 @@
 {% extends "base.html" %}
 {% block title %}
-    {{ title }}
+    Semesters
 {% endblock %}
 
 {% block content %}
-    <ul class="list-group">
-        {% for semester in semesters %}
-            <li class="list-group-item">
-                {{ semester.id }}. {{ semester.year }}
-                <a href="{% url "delete_semester" semester.id %}" class="btn btn-outline-danger" style="float: right">Delete</a>
-                <a href="{% url "update_semester_form" semester.id %}" class="btn btn-outline-success" style="float: right; margin-right: 20px">Update</a>
-            </li>
-        {% endfor %}
-    </ul>
+    <h1 class="display-1" style="margin-bottom: 30px">Semesters</h1>
+    <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Year</th>
+      <th scope="col">Semester</th>
+      <th><a href="{% url "create_semester" %}" class="btn btn-primary" style="float: right;width: 168px">Create</a></td></th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for semester in object_list %}
+    <tr>
+      <th scope="row">{{ semester.id }}</th>
+      <td>{{ semester.year }}</td>
+      <td>{{ semester.semester }}</td>
+      <td>
+          <a href="{% url "delete_semester" semester.id %}" class="btn btn-danger" style="float: right">Delete</a>
+          <a href="{% url "update_semester" semester.id %}" class="btn btn-success" style="float: right; margin-right: 20px">Update</a>
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
 {% endblock %}

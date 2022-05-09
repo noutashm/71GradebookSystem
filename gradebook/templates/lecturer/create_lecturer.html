@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}
+    Create Lecturer
+{% endblock %}
+
+{% block content %}
+    <h1 class="display-2" style="margin-bottom: 30px">Create Lecturer</h1>
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="firstName" class="form-label">First Name</label>
+            {{ form.firstName }}
+        </div>
+        <div class="mb-3">
+            <label for="lastName" class="form-label">Last Name</label>
+            {{ form.lastName }}
+        </div>
+        <div class="mb-3">
+            <label for="lastName" class="form-label">Email</label>
+            {{ form.email }}
+        </div>
+        <div class="mb-3">
+            <label for="lastName" class="form-label">Course</label>
+            {{ form.course }}
+        </div>
+        <div class="mb-3">
+            <label for="lastName" class="form-label">Date Of Birth</label>
+            {{ form.dateOfBirth }}
+        </div>
+        <button class="btn btn-primary" type="submit">Create</button>
+    </form>
+{% endblock %}

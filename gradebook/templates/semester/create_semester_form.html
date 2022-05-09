@@ -4,12 +4,17 @@
 {% endblock %}
 
 {% block content %}
+    <h1 class="display-2" style="margin-bottom: 30px">Create Semester</h1>
     <form method="post" action="{% url "create_semester" %}">
         {% csrf_token %}
-        <label>Year</label>
-        <input type="text" name="year">
-        <label>Semester</label>
-        <input type="text" name="semester">
-        <button type="submit">Create</button>
+        <div class="mb-3">
+            <label for="year" class="form-label">Year</label>
+            <input type="text" class="form-control" id="year" name="year">
+        </div>
+        <div class="mb-3">
+            <label for="semester" class="form-label">Semester</label>
+            <input type="number" class="form-control" id="semester" name="semester">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 {% endblock %}

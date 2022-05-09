@@ -1,80 +1,82 @@
 from django.shortcuts import render
 
 # Create your views here.
+from django.urls import reverse_lazy
+from django.views.generic import *
+
+from gradebook.forms import *
 from gradebook.models import *
 
 
-def index(request):
-    context = {
-        "title": "my title",
-        "content": "my content"
-    }
-    render(request, "index.html", context)
+# def index(request):
+#     context = {
+#         "title": "my title",
+#         "content": "my content"
+#     }
+#     render(request, "index.html", context)
 
-def listSemesters(request):
-    semesters = Semester.objects.all()
-    context = {
-        "title": "Semesters",
-        "semesters": semesters
-    }
-    return render(request, "semester/list_semesters.html", context)
+class HomePageView(TemplateView):
+    template_name = "index.html"
 
-def createSemester(request):
-    inputYear = request.POST.get("year")
-    inputSemester = request.POST.get("semester")
-    try:
-        semester = Semester(year=inputYear, semester=inputSemester)
-        semester.save()
-        message = "Semester " + inputSemester + " Created!"
-    except:
-        message = "Semester Creation Failed!"
-    context = {
-        "title": "Create Semester",
-        "message": message
-    }
-    return render(request, 'semester/create_semester.html', context)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = 'Home'
+        context["semesters"] = Semester.objects.all()
+        return context
 
-def createSemesterForm(request):
-    context = {
-        "title": "Create Semester Form"
-    }
-    return render(request, 'semester/create_semester_form.html', context)
+class ListSemesters(ListView):
+    model = Semester
+    template_name = 'semester/list_semesters.html'
 
-def updateSemester(request):
-    inputID = request.POST.get('id')
-    inputYear = request.POST.get("year")
-    inputSemester = request.POST.get("semester")
-    try:
-        semester = Semester.objects.get(id=inputID)
-        semester.year = inputYear
-        semester.semester = inputSemester
-        semester.save()
-        message = "Semester " + inputSemester + " Updated!"
-    except:
-        message = "Semester Update Failed!"
-    context = {
-        "title": "Update Semester",
-        "message": message
-    }
-    return render(request, 'semester/update_semester.html', context)
+class CreateSemesterView(CreateView):
+    model = Semester
+    form_class = SemesterForm
+    template_name = 'semester/create_semester.html'
 
-def updateSemesterForm(request, id):
-    semester = Semester.objects.get(id=id)
-    context = {
-        "title": "Update Semester Form",
-        "category": semester
-    }
-    return render(request, 'semester/update_semester_form.html', context)
+class UpdateSemesterView(UpdateView):
+    model = Semester
+    form_class = SemesterForm
+    template_name = 'semester/update_semester.html'
 
-def deleteSemester(request, id):
-    try:
-        semester = Semester.objects.get(id=id)
-        semester.delete()
-        message = semester.semester + " Deleted Successfully!"
-    except:
-        message = "Delete Failed!"
-    context = {
-        "title": "Delete Semester",
-        "message": message
-    }
-    return render(request, 'semester/delete_semester.html', context)
+class DeleteSemesterView(DeleteView):
+    model = Semester
+    template_name = 'semester/delete_semester.html'
+    success_url = reverse_lazy('list_semesters')
+
+class ListCourses(ListView):
+    model = Course
+    template_name = 'course/list_courses.html'
+
+class CreateCourseView(CreateView):
+    model = Course
+    form_class = CourseForm
+    template_name = 'course/create_course.html'
+
+class UpdateCourseView(UpdateView):
+    model = Course
+    form_class = CourseForm
+    template_name = 'course/update_course.html'
+
+class DeleteCourseView(DeleteView):
+    model = Course
+    template_name = 'course/delete_course.html'
+    success_url = reverse_lazy('list_courses')
+
+class ListLecturers(ListView):
+    model = Lecturer
+    template_name = 'lecturer/list_lecturers.html'
+
+class CreateLecturerView(CreateView):
+    model = Lecturer
+    form_class = LecturerForm
+    template_name = 'lecturer/create_lecturer.html'
+
+class UpdateLecturerView(UpdateView):
+    model = Lecturer
+    form_class = LecturerForm
+    template_name = 'lecturer/update_lecturer.html'
+
+class DeleteLecturerView(DeleteView):
+    model = Lecturer
+    template_name = 'lecturer/delete_lecturer.html'
+    success_url = reverse_lazy('list_lecturers')

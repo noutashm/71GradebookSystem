@@ -1,10 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
+{% block title %}
+    Courses
+{% endblock %}
 
-</body>
-</html>
+{% block content %}
+    <h1 class="display-1" style="margin-bottom: 30px">Courses</h1>
+    <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Code</th>
+      <th><a href="{% url "create_course" %}" class="btn btn-primary" style="float: right;width: 168px">Create</a></td></th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for course in object_list %}
+    <tr>
+      <th scope="row">{{ course.id }}</th>
+      <td>{{ course.name }}</td>
+      <td>{{ course.code }}</td>
+      <td>
+          <a href="{% url "delete_course" course.id %}" class="btn btn-danger" style="float: right">Delete</a>
+          <a href="{% url "update_course" course.id %}" class="btn btn-success" style="float: right; margin-right: 20px">Update</a>
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

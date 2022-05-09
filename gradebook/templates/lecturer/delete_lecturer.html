@@ -1,15 +1,15 @@
 {% extends "base.html" %}
 {% block title %}
-    Delete Course
+    Delete Lecturer
 {% endblock %}
 
 {% block content %}
     <form method="post">
-    <h1 class="display-2" style="margin-bottom: 30px">Delete Course</h1>
+    <h1 class="display-2" style="margin-bottom: 30px">Delete Lecturer</h1>
         {% csrf_token %}
         {{ form.as_p }}
-        <p>Are you Sure you want to Delete?</p>
-        <a class="btn btn-success" href="{% url 'list_courses' %}">No</a>
+        <p>Are you SURE you want to Delete?</p>
+        <a class="btn btn-success" href="{% url 'list_lecturers' %}">No</a>
         <button class="btn btn-danger" type="submit">Yes</button>
     </form>
 {% endblock %}

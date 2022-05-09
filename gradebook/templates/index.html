@@ -1,8 +1,13 @@
 {% extends "base.html" %}
 {% block title %}
-    Home
+{{ title }}
 {% endblock %}
 
 {% block content %}
-    Index Page
+    <h1>Semesters</h1>
+    <ul>
+        {% for semester in semesters %}
+            <li>{{ semester.year }} - {{ semester.semester }}</li>
+        {% endfor %}
+    </ul>
 {% endblock %}
