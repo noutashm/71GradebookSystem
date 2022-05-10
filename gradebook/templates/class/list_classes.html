@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}
+    Classes
+{% endblock %}
+
+{% block content %}
+    <h1 class="display-1" style="margin-bottom: 30px">Classes</h1>
+    <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Number</th>
+      <th scope="col">Semester</th>
+      <th scope="col">Course</th>
+      <th scope="col">Lecturer</th>
+      <th><a href="{% url "create_class" %}" class="btn btn-primary" style="float: right;width: 168px">Create</a></td></th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for class in object_list %}
+    <tr>
+      <th scope="row">{{ class.id }}</th>
+      <td>{{ class.number }}</td>
+      <td>{{ class.semester }}</td>
+      <td>{{ class.course }}</td>
+      <td>{{ class.lecturer.firstName }} {{ class.lecturer.lastName }}</td>
+      <td>
+          <a href="{% url "delete_class" class.id %}" class="btn btn-danger" style="float: right">Delete</a>
+          <a href="{% url "update_class" class.id %}" class="btn btn-success" style="float: right; margin-right: 20px">Update</a>
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

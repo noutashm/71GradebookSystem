@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}
+    Create Class
+{% endblock %}
+
+{% block content %}
+    <h1 class="display-2" style="margin-bottom: 30px">Create Class</h1>
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="number" class="form-label">Number</label>
+            {{ form.number }}
+        </div>
+        <div class="mb-3">
+            <label for="semester" class="form-label">Semester</label>
+            {{ form.semester }}
+        </div>
+        <div class="mb-3">
+            <label for="course" class="form-label">Course</label>
+            {{ form.course }}
+        </div>
+        <div class="mb-3">
+            <label for="lecturer" class="form-label">Lecturer</label>
+            {{ form.lecturer }}
+        </div>
+        <button class="btn btn-primary" type="submit">Create</button>
+    </form>
+{% endblock %}

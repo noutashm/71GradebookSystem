@@ -45,7 +45,10 @@ class Class(models.Model):
     lecturer = models.ForeignKey(Lecturer, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.number
+        return str(self.number)
+
+    def get_absolute_url(self):
+        return reverse('list_classes')
 
 class Student(models.Model):
     firstName = models.CharField(max_length=50, null=False, blank=False)
@@ -54,7 +57,10 @@ class Student(models.Model):
     dateOfBirth = models.DateField(null=False, blank=False)
 
     def __str__(self):
-        return self.firstName
+        return self.firstName + " " + self.lastName
+
+    def get_absolute_url(self):
+        return reverse('list_students')
 
 class StudentEnrollment(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
