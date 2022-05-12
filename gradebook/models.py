@@ -74,12 +74,16 @@ class Student(models.Model):
     def get_absolute_url(self):
         return reverse('list_students')
 
-class StudentEnrollment(models.Model):
+
+class StudentEnrolment(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     class1 = models.ForeignKey(Class, on_delete=models.CASCADE)
-    grade = models.PositiveIntegerField(validators=[MaxValueValidator(100)])
+    grade = models.PositiveIntegerField(validators=[MaxValueValidator(100)], blank=True, null=True)
     enrollTime = models.DateTimeField(auto_now_add=True)
-    gradeTime = models.DateTimeField()
+    gradeTime = models.DateTimeField(blank=True, null=True)
 
     def __str__(self):
         return self.student.firstName + " " + str(self.class1.number)
+
+    def get_absolute_url(self):
+        return reverse('list_student_enrolment')

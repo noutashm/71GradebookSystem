@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}
+    Enrol Student
+{% endblock %}
+
+{% block content %}
+    <h1 class="display-2" style="margin-bottom: 30px">Enrol Student</h1>
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="student" class="form-label">Student</label>
+            {{ form.student }}
+        </div>
+        <div class="mb-3">
+            <label for="class" class="form-label">Class</label>
+            {{ form.class1 }}
+        </div>
+        <button class="btn btn-primary" type="submit">Enrol</button>
+        <a class="btn btn-danger" href="{% url 'list_student_enrolment' %}">Back</a>
+    </form>
+{% endblock %}

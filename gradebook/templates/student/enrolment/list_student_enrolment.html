@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}
+    Enrolments
+{% endblock %}
+
+{% block content %}
+    <h1 class="display-1" style="margin-bottom: 30px">Enrolments</h1>
+    <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Student</th>
+      <th scope="col">Class</th>
+      <th>
+          <a href="{% url "enrol_student" %}" class="btn btn-primary" style="float: right;width: 82px">Enrol</a>
+          <a href="{% url "list_students" %}" class="btn btn-secondary" style="float: right;margin-right: 20px">Back To Students</a>
+      </th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for enrolment in object_list %}
+    <tr>
+      <td>{{ enrolment.student }}</td>
+      <td>{{ enrolment.class1 }}</td>
+      <td>
+          <a href="{% url "remove_student_enrolment" enrolment.id %}" class="btn btn-danger" style="float: right">Remove</a>
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

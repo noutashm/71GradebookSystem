@@ -61,6 +61,19 @@ class StudentForm(forms.ModelForm):
         }
 
 
+class StudentEnrolmentForm(forms.ModelForm):
+    class Meta:
+        model = StudentEnrolment
+        fields = ('student', 'class1', 'grade', 'gradeTime')
+
+        widgets = {
+            'student': forms.Select(attrs={'class': 'form-select'}),
+            'class1': forms.Select(attrs={'class': 'form-select'}),
+            'grade': forms.NumberInput(attrs={'class': 'form-control'}),
+            'gradeTime': forms.DateTimeInput(attrs={'class': 'form-control'}),
+        }
+
+
 class ClassForm(forms.ModelForm):
     class Meta:
         model = Class
