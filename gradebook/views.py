@@ -1,3 +1,5 @@
+import pandas as pd
+from django.contrib.auth.models import Group
 from django.core.files.storage import FileSystemStorage
 from django.shortcuts import render
 
@@ -113,10 +115,48 @@ class DeleteStudentView(DeleteView):
 
 def upload_student_file(request):
     if request.method == 'POST' and request.FILES['studentFile']:
-        studentFile = request.FILES['studentFile']
+        student_file = request.FILES['studentFile']
         fs = FileSystemStorage()
-        filename = fs.save(studentFile.name, studentFile)
+        filename = fs.save(student_file.name, student_file)
         uploaded_file_url = fs.url(filename)
+
+        import pandas as panda
+        excel_data = pd.read_excel(student_file)
+        data = pd.DataFrame(excel_data)
+        student_ids = data['ID'].tolist()
+        first_names = data['Firstname'].tolist()
+        last_names = data['Lastname'].tolist()
+        emails = data['Email'].tolist()
+        dobs = data['DOB'].tolist()
+        courses = data['Course'].tolist()
+        classes = data['Class'].tolist()
+
+        i = 0
+        while i < len(student_ids):
+            student_id = student_ids[i]
+            first_name = first_names[i]
+            last_name = last_names[i]
+            email = emails[i]
+            dob = dobs[i]
+            dob = str(dob).split(" ")[0]
+            password = dob.replace('-', '')
+            course = courses[i]
+            class1 = classes[i]
+
+            user = User.objects.create_user(username=first_name.lower())
+            user.set_password(password)
+            user.first_name = first_name
+            user.last_name = last_name
+            user.email = email
+            student_group = Group.objects.get(name='student')
+            user.groups.add(student_group)
+            user.save()
+            student = Student(user=user, studentID=student_id, firstName=first_name, lastName=last_name, email=email, dateOfBirth=dob)
+            student.save()
+
+            i = i + 1
+
+
         return render(request, 'student/upload_student.html', {
             'uploaded_file_url': uploaded_file_url
         })

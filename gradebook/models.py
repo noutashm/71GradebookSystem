@@ -1,9 +1,12 @@
+from datetime import datetime
+
 from django.contrib.auth.models import User
-from django.core.validators import MaxValueValidator
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
 # Planning to revise all this later
 from django.urls import reverse
+
 
 class Course(models.Model):
     code = models.CharField(max_length=50, null=False, blank=False, unique=True)
@@ -15,6 +18,7 @@ class Course(models.Model):
     def get_absolute_url(self):
         return reverse('list_courses')
 
+
 class Semester(models.Model):
     SEMESTERS = [
         ('S1', 'S1'),
@@ -22,8 +26,8 @@ class Semester(models.Model):
         ('S3', 'S3'),
         ('S4', 'S4')
     ]
-
-    year = models.PositiveIntegerField(validators=[MaxValueValidator(2200)], null=False, blank=False)
+    current_year = int(datetime.now().year)
+    year = models.PositiveIntegerField(validators=[MinValueValidator(current_year)], default=current_year)
     semester = models.CharField(choices=SEMESTERS, max_length=2, default='S1')
     courses = models.ManyToManyField(Course, blank=True, null=True)
 
@@ -32,6 +36,7 @@ class Semester(models.Model):
 
     def get_absolute_url(self):
         return reverse('list_semesters')
+
 
 class Lecturer(models.Model):
     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
@@ -48,6 +53,7 @@ class Lecturer(models.Model):
     def get_absolute_url(self):
         return reverse('list_lecturers')
 
+
 class Class(models.Model):
     number = models.PositiveIntegerField(null=False, blank=False)
     semester = models.ForeignKey(Semester, on_delete=models.CASCADE)
@@ -59,6 +65,7 @@ class Class(models.Model):
 
     def get_absolute_url(self):
         return reverse('list_classes')
+
 
 class Student(models.Model):
     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
