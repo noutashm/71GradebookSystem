@@ -8,7 +8,6 @@
     <table class="table">
   <thead>
     <tr>
-      <th scope="col">#</th>
       <th scope="col">Number</th>
       <th scope="col">Semester</th>
       <th scope="col">Course</th>
@@ -19,11 +18,17 @@
   <tbody>
   {% for class in object_list %}
     <tr>
-      <th scope="row">{{ class.id }}</th>
       <td>{{ class.number }}</td>
       <td>{{ class.semester }}</td>
       <td>{{ class.course }}</td>
-      <td>{{ class.lecturer.firstName }} {{ class.lecturer.lastName }}</td>
+        {% if class.lecturer %}
+            <td>
+                <a href="{% url "assign_lecturer_to_class" class.id %}" class="btn btn-outline-success">Change</a> -
+                {{ class.lecturer.firstName }} {{ class.lecturer.lastName }}
+            </td>
+        {% else %}
+            <td><a href="{% url "assign_lecturer_to_class" class.id %}" class="btn btn-outline-primary">Assign Lecturer</a></td>
+        {% endif %}
       <td>
           <a href="{% url "delete_class" class.id %}" class="btn btn-danger" style="float: right">Delete</a>
           <a href="{% url "update_class" class.id %}" class="btn btn-success" style="float: right; margin-right: 20px">Update</a>

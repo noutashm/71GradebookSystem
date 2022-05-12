@@ -8,6 +8,10 @@
     <form method="post">
         {% csrf_token %}
         <div class="mb-3">
+            <label for="studentID" class="form-label">Student ID</label>
+            {{ form.studentID }}
+        </div>
+        <div class="mb-3">
             <label for="firstName" class="form-label">First Name</label>
             {{ form.firstName }}
         </div>
@@ -24,5 +28,6 @@
             {{ form.dateOfBirth }}
         </div>
         <button class="btn btn-primary" type="submit">Create</button>
+        <a class="btn btn-danger" href="{% url 'list_students' %}">Back</a>
     </form>
 {% endblock %}

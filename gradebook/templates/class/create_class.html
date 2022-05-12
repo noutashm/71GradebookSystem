@@ -19,10 +19,7 @@
             <label for="course" class="form-label">Course</label>
             {{ form.course }}
         </div>
-        <div class="mb-3">
-            <label for="lecturer" class="form-label">Lecturer</label>
-            {{ form.lecturer }}
-        </div>
         <button class="btn btn-primary" type="submit">Create</button>
+        <a class="btn btn-danger" href="{% url 'list_classes' %}">Back</a>
     </form>
 {% endblock %}

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from gradebook.models import Semester, Course, Lecturer, Student, StudentEnrollment, Class
+from gradebook.models import *
 
 admin.site.register(Semester)
 admin.site.register(Course)

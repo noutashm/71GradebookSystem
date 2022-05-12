@@ -8,18 +8,22 @@
     <table class="table">
   <thead>
     <tr>
-      <th scope="col">#</th>
+      <th scope="col">Student ID</th>
       <th scope="col">First Name</th>
       <th scope="col">Last Name</th>
       <th scope="col">Email</th>
       <th scope="col">Date Of Birth</th>
-      <th><a href="{% url "create_student" %}" class="btn btn-primary" style="float: right;width: 168px">Create</a></td></th>
+      <th>
+          <a href="{% url "create_student" %}" class="btn btn-primary" style="float: right;">Create</a>
+          <a href="{% url "upload_student" %}" class="btn btn-primary" style="float: right;margin-right: 20px">Upload From File</a>
+      </th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
   {% for student in object_list %}
     <tr>
-      <th scope="row">{{ student.id }}</th>
+      <th scope="row">{{ student.studentID }}</th>
       <td>{{ student.firstName }}</td>
       <td>{{ student.lastName }}</td>
       <td>{{ student.email }}</td>

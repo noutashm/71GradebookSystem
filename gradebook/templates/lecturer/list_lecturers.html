@@ -8,7 +8,7 @@
     <table class="table">
   <thead>
     <tr>
-      <th scope="col">#</th>
+      <th scope="col">Staff ID</th>
       <th scope="col">First Name</th>
       <th scope="col">Last Name</th>
       <th scope="col">Email</th>
@@ -20,7 +20,7 @@
   <tbody>
   {% for lecturer in object_list %}
     <tr>
-      <th scope="row">{{ lecturer.id }}</th>
+      <th scope="row">{{ lecturer.staffID }}</th>
       <td>{{ lecturer.firstName }}</td>
       <td>{{ lecturer.lastName }}</td>
       <td>{{ lecturer.email }}</td>

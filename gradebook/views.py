@@ -1,3 +1,4 @@
+from django.core.files.storage import FileSystemStorage
 from django.shortcuts import render
 
 # Create your views here.
@@ -6,14 +7,6 @@ from django.views.generic import *
 
 from gradebook.forms import *
 from gradebook.models import *
-
-
-# def index(request):
-#     context = {
-#         "title": "my title",
-#         "content": "my content"
-#     }
-#     render(request, "index.html", context)
 
 class HomePageView(TemplateView):
     template_name = "index.html"
@@ -100,6 +93,17 @@ class DeleteStudentView(DeleteView):
     template_name = 'student/delete_student.html'
     success_url = reverse_lazy('list_students')
 
+def upload_student_file(request):
+    if request.method == 'POST' and request.FILES['studentFile']:
+        studentFile = request.FILES['studentFile']
+        fs = FileSystemStorage()
+        filename = fs.save(studentFile.name, studentFile)
+        uploaded_file_url = fs.url(filename)
+        return render(request, 'student/upload_student.html', {
+            'uploaded_file_url': uploaded_file_url
+        })
+    return render(request, 'student/upload_student.html')
+
 class ListClassesView(ListView):
     model = Class
     template_name = 'class/list_classes.html'
@@ -113,6 +117,11 @@ class UpdateClassView(UpdateView):
     model = Class
     form_class = ClassForm
     template_name = 'class/update_class.html'
+
+class AssignLecturerToClassView(UpdateView):
+    model = Class
+    form_class = LecturerToClassForm
+    template_name = 'class/assign_lecturer_to_class.html'
 
 class DeleteClassView(DeleteView):
     model = Class

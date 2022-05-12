@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}
+    Upload Student
+{% endblock %}
+
+{% block content %}
+    <h1 class="display-2" style="margin-bottom: 30px">Upload Student from Excel File</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input class="form-control" type="file" name="studentFile" style="margin-bottom: 20px">
+        <button class="btn btn-primary" type="submit">Upload</button>
+        <a class="btn btn-danger" href="{% url 'list_students' %}">Back</a>
+    </form>
+    {% if uploaded_file_url %}
+        <p>File uploaded at: <a href="{{ uploaded_file_url }}">{{ uploaded_file_url }}</a></p>
+    {% endif %}
+
+{% endblock %}

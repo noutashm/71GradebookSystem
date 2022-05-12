@@ -15,6 +15,11 @@
             <label for="semester" class="form-label">Semester</label>
             {{ form.semester }}
         </div>
+        <div class="mb-3">
+            <label for="courses" class="form-label">Courses</label>
+            {{ form.courses }}
+        </div>
         <button class="btn btn-success" type="submit">Update</button>
+        <a class="btn btn-danger" href="{% url 'list_semesters' %}">Back</a>
     </form>
 {% endblock %}

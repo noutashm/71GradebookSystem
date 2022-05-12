@@ -8,15 +8,18 @@ from gradebook.models import *
 class DatePickerInput(forms.DateInput):
     input_type = 'date'
 
+
 class SemesterForm(forms.ModelForm):
     class Meta:
         model = Semester
-        fields = ('year', 'semester')
+        fields = ('year', 'semester', 'courses')
 
         widgets = {
-            'year': forms.NumberInput(attrs={'class': 'form-control'}),
-            'semester': forms.NumberInput(attrs={'class': 'form-control'})
+            'year': forms.NumberInput(attrs={'class': 'form-control', 'min': '2000', 'max': '2200'}),
+            'semester': forms.Select(attrs={'class': 'form-select'}),
+            'courses': forms.SelectMultiple(attrs={'class': 'form-select'}),
         }
+
 
 class CourseForm(forms.ModelForm):
     class Meta:
@@ -28,12 +31,14 @@ class CourseForm(forms.ModelForm):
             'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Name'})
         }
 
+
 class LecturerForm(forms.ModelForm):
     class Meta:
         model = Lecturer
-        fields = ('firstName', 'lastName', 'email', 'course', 'dateOfBirth')
+        fields = ('staffID', 'firstName', 'lastName', 'email', 'course', 'dateOfBirth')
 
         widgets = {
+            'staffID': forms.NumberInput(attrs={'class': 'form-control'}),
             'firstName': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'First Name'}),
             'lastName': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Last Name'}),
             'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Email'}),
@@ -41,17 +46,20 @@ class LecturerForm(forms.ModelForm):
             'dateOfBirth': DatePickerInput(attrs={'class': 'form-control'}),
         }
 
+
 class StudentForm(forms.ModelForm):
     class Meta:
         model = Student
-        fields = ('firstName', 'lastName', 'email', 'dateOfBirth')
+        fields = ('studentID', 'firstName', 'lastName', 'email', 'dateOfBirth')
 
         widgets = {
+            'studentID': forms.NumberInput(attrs={'class': 'form-control'}),
             'firstName': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'First Name'}),
             'lastName': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Last Name'}),
             'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Email'}),
             'dateOfBirth': DatePickerInput(attrs={'class': 'form-control'}),
         }
+
 
 class ClassForm(forms.ModelForm):
     class Meta:
@@ -62,5 +70,15 @@ class ClassForm(forms.ModelForm):
             'number': forms.NumberInput(attrs={'class': 'form-control'}),
             'semester': forms.Select(attrs={'class': 'form-select'}),
             'course': forms.Select(attrs={'class': 'form-select'}),
+            'lecturer': forms.Select(attrs={'class': 'form-select'}),
+        }
+
+
+class LecturerToClassForm(forms.ModelForm):
+    class Meta:
+        model = Class
+        fields = ('lecturer',)
+
+        widgets = {
             'lecturer': forms.Select(attrs={'class': 'form-select'}),
         }
