@@ -26,14 +26,14 @@
                     style="cursor: pointer">
                     <td>{{ class.number }}</td>
                     <td>{{ class.course }}</td>
-                    <td>I am Admin</td>
+                    <td></td>
                 </tr>
             {% elif user == class.lecturer.user %}
                 <tr class="clickable" onclick="window.location='{% url 'student_list_gradebook'  class.id %}'"
                     style="cursor: pointer">
                     <td>{{ class.number }}</td>
                     <td>{{ class.course }}</td>
-                    <td>I am Lecturer</td>
+                    <td></td>
                 </tr>
             {% endif %}
             {% for enrolment in studentEnrolment %}
