@@ -122,7 +122,15 @@ STATIC_URL = 'static/'
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
 LOGIN_REDIRECT_URL = 'home'
-LOGOUT_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'login'
+
+SENDGRID_API_KEY = os.getenv('ZMq3blezRv2rx4zVsrYQBg')
+
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_USER = 'apikey'
+EMAIL_HOST_PASSWORD = "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"
+EMAIL_PORT = 587
+EMAIL_USE_TLS =True
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

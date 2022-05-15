@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}
+    GradeBook - Grade Student
+{% endblock %}
+
+{% block content %}
+    <h1 class="display-2" style="margin-bottom: 30px">Grade Student</h1>
+    <h4 class="display-4">
+        {% for value, text in form.student.field.choices %}
+            {% if value == form.student.value %}
+                {{ text }}
+            {% endif %}
+        {% endfor %}
+    </h4>
+    <form method="post" action="{% url "grade_student" %}">
+        {% csrf_token %}
+         <div class="mb-3">
+            <input type="number" class="form-control" name="id" value="{{ studentEnrolment.id }}" readonly hidden>
+        </div>
+        <div class="mb-3">
+            <label for="grade" class="form-label">Grade</label>
+            <input type="number" min="0" max="100" class="form-control" name="grade" value="{{ studentEnrolment.grade }}">
+        </div>
+        <button class="btn btn-primary" type="submit">Grade</button>
+        <a href="{% url "student_list_gradebook" studentEnrolment.class1.id %}" class="btn btn-danger">Back</a>
+    </form>
+{% endblock %}

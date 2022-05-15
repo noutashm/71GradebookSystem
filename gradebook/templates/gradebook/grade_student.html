@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}
+    GradeBook - Grade Student
+{% endblock %}
+
+{% block content %}
+    <h1 class="display-2" style="margin-bottom: 30px">Grade Student</h1>
+    <h4 class="display-4" style="margin-bottom: 30px">{{ message }}</h4>
+    <a class="btn btn-primary" href="{% url 'student_list_gradebook' studentEnrolment.class1.id %}">Back To Students</a>
+{% endblock %}

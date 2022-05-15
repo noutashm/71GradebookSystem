@@ -5,5 +5,9 @@
 
 {% block content %}
     <h1 class="display-1" style="margin-bottom: 30px">Home</h1>
-    <h3 class="display-3">Welcome to GradeBook System</h3>
+    {% if user.is_authenticated %}
+        <h3 class="display-3">Welcome to GradeBook System</h3>
+    {% else %}
+        <h3 class="display-3">Please Login to Access the Grade book!</h3>
+    {% endif %}
 {% endblock %}

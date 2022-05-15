@@ -1,11 +1,12 @@
 import pandas as pd
 from django.contrib.auth.models import Group
 from django.core.files.storage import FileSystemStorage
+from django.core.mail import send_mail
 from django.shortcuts import render
 
-# Create your views here.
 from django.urls import reverse_lazy
-from django.views.generic import *
+from django.utils import timezone
+from django.views.generic import TemplateView, ListView, CreateView, UpdateView, DeleteView
 
 from gradebook.forms import *
 from gradebook.models import *
@@ -151,11 +152,11 @@ def upload_student_file(request):
             student_group = Group.objects.get(name='student')
             user.groups.add(student_group)
             user.save()
-            student = Student(user=user, studentID=student_id, firstName=first_name, lastName=last_name, email=email, dateOfBirth=dob)
+            student = Student(user=user, studentID=student_id, firstName=first_name, lastName=last_name, email=email,
+                              dateOfBirth=dob)
             student.save()
 
             i = i + 1
-
 
         return render(request, 'student/upload_student.html', {
             'uploaded_file_url': uploaded_file_url
@@ -207,3 +208,53 @@ class RemoveStudentEnrolmentView(DeleteView):
     model = StudentEnrolment
     template_name = 'student/enrolment/remove_student_enrolment.html'
     success_url = reverse_lazy('list_student_enrolment')
+
+
+class GradeBookSemesterView(ListView):
+    model = Semester
+    template_name = 'gradebook/semesters_gradebook.html'
+
+
+def gradebook_class(request, pk):
+    classes = Class.objects.filter(semester_id=pk)
+    studentEnrolment = StudentEnrolment.objects.all()
+    context = {
+        "classes": classes,
+        "studentEnrolment": studentEnrolment
+    }
+    return render(request, 'gradebook/classes_gradebook.html', context)
+
+
+def gradebook_student_list(request, pk):
+    studentEnrolment = StudentEnrolment.objects.filter(class1_id=pk)
+    current_class = Class.objects.get(id=pk)
+    context = {
+        "semester_id": current_class.semester.id,
+        "studentEnrolment": studentEnrolment
+    }
+    return render(request, 'gradebook/student_list_gradebook.html', context)
+
+def gradebook_grade_student(request):
+    id = request.POST.get("id")
+    grade = request.POST.get("grade")
+    try:
+        studentEnrolment = StudentEnrolment.objects.get(id=id)
+        studentEnrolment.grade = grade
+        studentEnrolment.gradeTime = timezone.now()
+        studentEnrolment.save()
+        send_mail('Class Grade Notification', 'Your grade has been published! \nPlease check in gradebook :).', 'noutam01@myunitec.ac.nz', [studentEnrolment.student.email], fail_silently=False)
+        message = "Student " + studentEnrolment.student.firstName + " graded successfully!"
+    except:
+        message = "Could not grade " + studentEnrolment.student.firstName + "!"
+
+    context = {
+        "message": message,
+        "studentEnrolment": studentEnrolment
+    }
+    return render(request, 'gradebook/grade_student.html', context)
+
+
+def gradebook_grade_student_form(request, pk):
+    studentEnrolment = StudentEnrolment.objects.get(id=pk)
+    context = {"studentEnrolment": studentEnrolment}
+    return render(request, 'gradebook/grade_student_form.html', context)

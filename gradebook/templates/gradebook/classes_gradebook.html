@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}
+    GradeBook - Classes
+{% endblock %}
+
+{% block content %}
+    <h1 class="display-1" style="margin-bottom: 30px">GradeBook - Classes</h1>
+    <table class="table table-secondary table-hover">
+        <thead>
+        <tr>
+            <th scope="col">Number</th>
+            <th scope="col">Course</th>
+            {% if user.groups.all.0.name == 'student' %}
+                <th scope="col">Grade</th>
+                <th scope="col">Grade Time</th>
+            {% endif %}
+            <th>
+                <a href="{% url "semesters_gradebook" %}" class="btn btn-primary" style="float: right;">Back</a>
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for class in classes %}
+            {% for enrolment in studentEnrolment %}
+                {% if user.groups.all.0.name == 'admin' %}
+                    <tr class="clickable" onclick="window.location='{% url 'student_list_gradebook'  class.id %}'"
+                        style="cursor: pointer">
+                        <td>{{ class.number }}</td>
+                        <td>{{ class.course }}</td>
+                        <td></td>
+                    </tr>
+                {% elif user == class.lecturer.user %}
+                    <tr class="clickable" onclick="window.location='{% url 'student_list_gradebook'  class.id %}'"
+                        style="cursor: pointer">
+                        <td>{{ class.number }}</td>
+                        <td>{{ class.course }}</td>
+                        <td></td>
+                    </tr>
+                {% elif enrolment.class1.id == class.id and user == enrolment.student.user %}
+                    <td>{{ class.number }}</td>
+                    <td>{{ class.course }}</td>
+                    <td>{{ enrolment.grade }}</td>
+                    <td>{{ enrolment.gradeTime }}</td>
+                    <td></td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

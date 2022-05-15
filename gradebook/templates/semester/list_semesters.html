@@ -6,30 +6,34 @@
 {% block content %}
     <h1 class="display-1" style="margin-bottom: 30px">Semesters</h1>
     <table class="table">
-  <thead>
-    <tr>
-      <th scope="col">Year</th>
-      <th scope="col">Semester</th>
-      <th scope="col">Courses</th>
-      <th><a href="{% url "create_semester" %}" class="btn btn-primary" style="float: right;width: 168px">Create</a></td></th>
-    </tr>
-  </thead>
-  <tbody>
-  {% for semester in object_list %}
-    <tr>
-      <td>{{ semester.year }}</td>
-      <td>{{ semester.semester }}</td>
-      <td>
-          {% for course in semester.courses.all %}
-              <a href="{% url "list_courses" %}">{{ course }}</a><br \>
-          {% endfor %}
-      </td>
-      <td>
-          <a href="{% url "delete_semester" semester.id %}" class="btn btn-danger" style="float: right">Delete</a>
-          <a href="{% url "update_semester" semester.id %}" class="btn btn-success" style="float: right; margin-right: 20px">Update</a>
-      </td>
-    </tr>
-  {% endfor %}
-  </tbody>
-</table>
+        <thead>
+        <tr>
+            <th scope="col">Year</th>
+            <th scope="col">Semester</th>
+            <th scope="col">Courses</th>
+            <th><a href="{% url "create_semester" %}" class="btn btn-primary"
+                   style="float: right;width: 168px">Create</a>
+            </td></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for semester in object_list %}
+            <tr>
+                <td>{{ semester.year }}</td>
+                <td>{{ semester.semester }}</td>
+                <td>
+                    {% for course in semester.courses.all %}
+                        <a href="{% url "list_courses" %}">{{ course }}</a><br \>
+                    {% endfor %}
+                </td>
+                <td>
+                    <a href="{% url "delete_semester" semester.id %}" class="btn btn-danger"
+                       style="float: right">Delete</a>
+                    <a href="{% url "update_semester" semester.id %}" class="btn btn-success"
+                       style="float: right; margin-right: 20px">Update</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}

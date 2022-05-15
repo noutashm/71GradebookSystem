@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}
+    GradeBook - Student List
+{% endblock %}
+
+{% block content %}
+    <h1 class="display-1" style="margin-bottom: 30px">Students In the Class</h1>
+    <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Student</th>
+      <th scope="col">Grade</th>
+      <th scope="col">Grade Time</th>
+      <th>
+          <a href="{% url 'classes_gradebook' semester_id %}" class="btn btn-primary" style="float: right;">Back</a>
+      </th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for enrolment in studentEnrolment %}
+    <tr>
+      <td>{{ enrolment.student }}</td>
+      <td>{{ enrolment.grade }}</td>
+      <td>{{ enrolment.gradeTime }}</td>
+      <td>
+          <a href="{% url "grade_student_form" enrolment.id %}" class="btn btn-success" style="float: right">Grade</a>
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

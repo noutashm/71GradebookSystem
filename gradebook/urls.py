@@ -37,7 +37,9 @@ urlpatterns = [
     path('classes/delete/<int:pk>', DeleteClassView.as_view(), name='delete_class'),
     path('classes/assign_lecturer/<int:pk>', AssignLecturerToClassView.as_view(), name='assign_lecturer_to_class'),
 
-    # path('accounts/', include('django.contrib.auth.urls')),
-    # path('login', auth_views.LoginView.as_view(), name='login'),
-    # path('logout', auth_views.LogoutView.as_view(), name='logout')
+    path('gradebook', GradeBookSemesterView.as_view(), name='semesters_gradebook'),
+    path('gradebook/<int:pk>/classes', gradebook_class, name='classes_gradebook'),
+    path('gradebook/<int:pk>/students', gradebook_student_list, name='student_list_gradebook'),
+    path('gradebook/grade_student', gradebook_grade_student, name='grade_student'),
+    path('gradebook/grade_student_form/<int:pk>', gradebook_grade_student_form, name='grade_student_form'),
 ]
