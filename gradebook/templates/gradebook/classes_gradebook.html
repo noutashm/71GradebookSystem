@@ -21,22 +21,23 @@
         </thead>
         <tbody>
         {% for class in classes %}
+            {% if user.groups.all.0.name == 'admin' %}
+                <tr class="clickable" onclick="window.location='{% url 'student_list_gradebook'  class.id %}'"
+                    style="cursor: pointer">
+                    <td>{{ class.number }}</td>
+                    <td>{{ class.course }}</td>
+                    <td>I am Admin</td>
+                </tr>
+            {% elif user == class.lecturer.user %}
+                <tr class="clickable" onclick="window.location='{% url 'student_list_gradebook'  class.id %}'"
+                    style="cursor: pointer">
+                    <td>{{ class.number }}</td>
+                    <td>{{ class.course }}</td>
+                    <td>I am Lecturer</td>
+                </tr>
+            {% endif %}
             {% for enrolment in studentEnrolment %}
-                {% if user.groups.all.0.name == 'admin' %}
-                    <tr class="clickable" onclick="window.location='{% url 'student_list_gradebook'  class.id %}'"
-                        style="cursor: pointer">
-                        <td>{{ class.number }}</td>
-                        <td>{{ class.course }}</td>
-                        <td></td>
-                    </tr>
-                {% elif user == class.lecturer.user %}
-                    <tr class="clickable" onclick="window.location='{% url 'student_list_gradebook'  class.id %}'"
-                        style="cursor: pointer">
-                        <td>{{ class.number }}</td>
-                        <td>{{ class.course }}</td>
-                        <td></td>
-                    </tr>
-                {% elif enrolment.class1.id == class.id and user == enrolment.student.user %}
+                {% if enrolment.class1.id == class.id and user == enrolment.student.user %}
                     <td>{{ class.number }}</td>
                     <td>{{ class.course }}</td>
                     <td>{{ enrolment.grade }}</td>
