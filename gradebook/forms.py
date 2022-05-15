@@ -35,9 +35,10 @@ class CourseForm(forms.ModelForm):
 class LecturerForm(forms.ModelForm):
     class Meta:
         model = Lecturer
-        fields = ('staffID', 'firstName', 'lastName', 'email', 'course', 'dateOfBirth')
+        fields = ('user', 'staffID', 'firstName', 'lastName', 'email', 'course', 'dateOfBirth')
 
         widgets = {
+            'user': forms.Select(attrs={'class': 'form-select'}),
             'staffID': forms.NumberInput(attrs={'class': 'form-control'}),
             'firstName': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'First Name'}),
             'lastName': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Last Name'}),
@@ -50,9 +51,10 @@ class LecturerForm(forms.ModelForm):
 class StudentForm(forms.ModelForm):
     class Meta:
         model = Student
-        fields = ('studentID', 'firstName', 'lastName', 'email', 'dateOfBirth')
+        fields = ('user', 'studentID', 'firstName', 'lastName', 'email', 'dateOfBirth')
 
         widgets = {
+            'user': forms.Select(attrs={'class': 'form-select'}),
             'studentID': forms.NumberInput(attrs={'class': 'form-control'}),
             'firstName': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'First Name'}),
             'lastName': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Last Name'}),

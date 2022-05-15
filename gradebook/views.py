@@ -143,6 +143,7 @@ def upload_student_file(request):
             password = dob.replace('-', '')
             course = courses[i]
             class1 = classes[i]
+            enrolTime = timezone.now()
 
             user = User.objects.create_user(username=first_name.lower())
             user.set_password(password)
@@ -155,6 +156,8 @@ def upload_student_file(request):
             student = Student(user=user, studentID=student_id, firstName=first_name, lastName=last_name, email=email,
                               dateOfBirth=dob)
             student.save()
+            studentEnrolment = StudentEnrolment(student=student, class1=class1, enrollTime=enrolTime)
+            studentEnrolment.save()
 
             i = i + 1
 
