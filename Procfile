@@ -1,1 +1,1 @@
-web: gunicorn gradebookSystem
+web: gunicorn gradebooksystem
