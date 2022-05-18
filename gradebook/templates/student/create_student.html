@@ -5,29 +5,6 @@
 
 {% block content %}
     <h1 class="display-2" style="margin-bottom: 30px">Create Student</h1>
-    <form method="post">
-        {% csrf_token %}
-        <div class="mb-3">
-            <label for="studentID" class="form-label">Student ID</label>
-            {{ form.studentID }}
-        </div>
-        <div class="mb-3">
-            <label for="firstName" class="form-label">First Name</label>
-            {{ form.firstName }}
-        </div>
-        <div class="mb-3">
-            <label for="lastName" class="form-label">Last Name</label>
-            {{ form.lastName }}
-        </div>
-        <div class="mb-3">
-            <label for="lastName" class="form-label">Email</label>
-            {{ form.email }}
-        </div>
-        <div class="mb-3">
-            <label for="lastName" class="form-label">Date Of Birth</label>
-            {{ form.dateOfBirth }}
-        </div>
-        <button class="btn btn-primary" type="submit">Create</button>
-        <a class="btn btn-danger" href="{% url 'list_students' %}">Back</a>
-    </form>
+    <h4 class="display-4" style="margin-bottom: 30px">{{ message }}</h4>
+    <a class="btn btn-primary" href="{% url 'list_students' %}">Back To Students</a>
 {% endblock %}

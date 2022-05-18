@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}
+    Create Student
+{% endblock %}
+
+{% block content %}
+    <h1 class="display-2" style="margin-bottom: 30px">Create Student</h1>
+    <form action="{% url 'create_student' %}" method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="studentID" class="form-label">Student ID</label>
+            <input type="number" name="student_id" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label for="firstName" class="form-label">First Name</label>
+            <input type="text" name="first_name" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label for="lastName" class="form-label">Last Name</label>
+            <input type="text" name="last_name" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label for="lastName" class="form-label">Email</label>
+            <input type="email" name="email" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label for="lastName" class="form-label">Date Of Birth</label>
+            <input type="date" name="dob" class="form-control">
+        </div>
+        <button class="btn btn-primary" type="submit">Create</button>
+        <a class="btn btn-danger" href="{% url 'list_students' %}">Back</a>
+    </form>
+{% endblock %}

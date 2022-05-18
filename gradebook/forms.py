@@ -1,8 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
-
-from gradebook.models import *
+from gradebook.models import Semester, Course, Lecturer, Student, StudentEnrolment, Class
 
 
 class DatePickerInput(forms.DateInput):

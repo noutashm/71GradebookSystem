@@ -26,7 +26,7 @@ class Semester(models.Model):
     current_year = int(datetime.now().year)
     year = models.PositiveIntegerField(validators=[MinValueValidator(current_year)], default=current_year)
     semester = models.CharField(choices=SEMESTERS, max_length=2, default='S1')
-    courses = models.ManyToManyField(Course, blank=True, null=True)
+    courses = models.ManyToManyField(Course, blank=True)
 
     def __str__(self):
         return str(self.year) + " " + str(self.semester)
@@ -36,12 +36,12 @@ class Semester(models.Model):
 
 
 class Lecturer(models.Model):
-    user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, null=False, blank=False, on_delete=models.CASCADE)
     staffID = models.PositiveIntegerField(null=False, blank=False, unique=True)
     firstName = models.CharField(max_length=100, null=False, blank=False)
     lastName = models.CharField(max_length=100, null=False, blank=False)
     email = models.EmailField(max_length=254, null=False, blank=False)
-    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, blank=True, null=True, on_delete=models.SET_NULL)
     dateOfBirth = models.DateField(null=False, blank=False)
 
     def __str__(self):
@@ -55,7 +55,7 @@ class Class(models.Model):
     number = models.PositiveIntegerField(null=False, blank=False)
     semester = models.ForeignKey(Semester, on_delete=models.CASCADE)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
-    lecturer = models.ForeignKey(Lecturer, on_delete=models.CASCADE, blank=True, null=True)
+    lecturer = models.ForeignKey(Lecturer, on_delete=models.SET_NULL, blank=True, null=True)
 
     def __str__(self):
         return str(self.number)
@@ -65,7 +65,7 @@ class Class(models.Model):
 
 
 class Student(models.Model):
-    user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, null=False, blank=False, on_delete=models.CASCADE)
     studentID = models.PositiveIntegerField(null=False, blank=False, unique=True)
     firstName = models.CharField(max_length=50, null=False, blank=False)
     lastName = models.CharField(max_length=50, null=False, blank=False)
