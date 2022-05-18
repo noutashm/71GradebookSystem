@@ -22,13 +22,11 @@ firebaseConfig = {
     "storageBucket": "iscg7420-assignment1.appspot.com",
     "messagingSenderId": "872079533591",
     "appId": "1:872079533591:web:14a00f7cf6118a7080de52",
-    "measurementId": "",
-    "databaseURL": ""
+    "databaseURL": "",
 }
 
 firebase = pyrebase.initialize_app(firebaseConfig)
 storage = firebase.storage()
-
 
 class HomePageView(TemplateView):
     template_name = "index.html"
@@ -207,13 +205,9 @@ class DeleteStudentView(DeleteView):
 def upload_student_file(request):
     if request.method == 'POST' and request.FILES['studentFile']:
         student_file = request.FILES['studentFile']
-        fs = FileSystemStorage()
 
-        # file_save = default_storage.save(student_file.name, student_file)
-        # storage.child("files/" + student_file.name).put("media/", student_file.name)
-
-        filename = fs.save(student_file.name, student_file)
-        uploaded_file_url = fs.url(filename)
+        save_file = default_storage.save(student_file.name, student_file)
+        storage.child("files/" + student_file.name).put("media/" + student_file.name)
 
         excel_data = pd.read_excel(student_file)
         data = pd.DataFrame(excel_data)
@@ -222,7 +216,6 @@ def upload_student_file(request):
         last_names = data['Lastname'].tolist()
         emails = data['Email'].tolist()
         dobs = data['DOB'].tolist()
-        courses = data['Course'].tolist()
         classes = data['Class'].tolist()
 
         i = 0
@@ -234,8 +227,7 @@ def upload_student_file(request):
             dob = dobs[i]
             dob = str(dob).split(" ")[0]
             password = dob.replace('-', '')
-            course = courses[i]
-            class1 = classes[i]
+            class1_number = classes[i]
             enrolTime = timezone.now()
 
             user = User.objects.create_user(username=first_name.lower())
@@ -248,15 +240,14 @@ def upload_student_file(request):
             user.save()
             student = Student(user=user, studentID=student_id, firstName=first_name, lastName=last_name, email=email,
                               dateOfBirth=dob)
+            class1 = Class.objects.get(number=class1_number)
             student.save()
             studentEnrolment = StudentEnrolment(student=student, class1=class1, enrollTime=enrolTime)
             studentEnrolment.save()
 
             i = i + 1
 
-        return render(request, 'student/upload_student.html', {
-            'uploaded_file_url': uploaded_file_url
-        })
+        return render(request, 'student/upload_student.html', {'message': 'File uploaded successfully!'})
     return render(request, 'student/upload_student.html')
 
 
