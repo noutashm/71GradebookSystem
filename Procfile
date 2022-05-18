@@ -1,1 +1,1 @@
-web: gunicorn gradebooksystem
+web: gunicorn gradebookSystem.wsgi
