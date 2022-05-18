@@ -5,7 +5,11 @@
 
 {% block content %}
     <h1 class="display-1" style="margin-bottom: 30px">GradeBook - Classes</h1>
-    <table class="table table-secondary table-hover">
+    {% if user.groups.all.0.name == 'student' %}
+        <table class="table table-secondary">
+    {% else %}
+        <table class="table table-secondary table-hover">
+    {% endif %}
         <thead>
         <tr>
             <th scope="col">Number</th>
@@ -38,11 +42,12 @@
             {% endif %}
             {% for enrolment in studentEnrolment %}
                 {% if enrolment.class1.id == class.id and user == enrolment.student.user %}
-                    <td>{{ class.number }}</td>
-                    <td>{{ class.course }}</td>
-                    <td>{{ enrolment.grade }}</td>
-                    <td>{{ enrolment.gradeTime }}</td>
-                    <td></td>
+                    <tr>
+                        <td>{{ class.number }}</td>
+                        <td>{{ class.course }}</td>
+                        <td>{{ enrolment.grade }}</td>
+                        <td>{{ enrolment.gradeTime }}</td>
+                        <td></td>
                     </tr>
                 {% endif %}
             {% endfor %}

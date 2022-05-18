@@ -77,10 +77,21 @@ WSGI_APPLICATION = 'gradebookSystem.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'd1k5gvkucil0vg',
+        'USER': 'zzvsvrrsidlxrq',
+        'PASSWORD': 'b00cda46a41dc0fc75ffae72081cee48ecf36b5c1c431f7030cffc165be457e6',
+        'HOST': 'ec2-3-211-6-217.compute-1.amazonaws.com',
+        'PORT': '5432',
     }
 }
 
